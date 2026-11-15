@@ -9,7 +9,7 @@
 :- dynamic transfer_penalty/1.
 :- dynamic nodes_expanded/1.
 
-transfer_penalty(0).
+transfer_penalty(3).
 
 heuristic_speed_kmh(120).
 
@@ -28,6 +28,39 @@ ucs(Start, Goal, Route, Cost, Expanded) :-
 
 bfs(Start, Goal, Route, Cost, Expanded) :-
     find_route(bfs, Start, Goal, Route, Cost, Expanded).
+
+plan(fastest, Start, Goal, Route, Minutes, Transfers) :-
+    !,
+    find_route(astar, Start, Goal, Route, Minutes, _),
+    count_transfers(Route, Transfers).
+plan(fewest_transfers, Start, Goal, Route, Minutes, Transfers) :-
+    !,
+    setup_call_cleanup(
+        ( findall(Penalty, transfer_penalty(Penalty), OldPenalties),
+        retractall(transfer_penalty(_)),
+        assertz(transfer_penalty(100))
+        ),
+        once(find_route(astar, Start, Goal, Route, _, _)),
+        restore_transfer_penalties(OldPenalties)
+    ),
+    route_minutes(Route, Minutes),
+    count_transfers(Route, Transfers).
+plan(fewest_stations, Start, Goal, Route, Minutes, Transfers) :-
+    !,
+    find_route(bfs, Start, Goal, Route, _, _),
+    route_minutes(Route, Minutes),
+    count_transfers(Route, Transfers).
+plan(Mode, _Start, _Goal, _Route, _Minutes, _Transfers) :-
+    throw(error(domain_error(route_mode, Mode),
+                context(plan/6,
+                        'Expected fastest, fewest_transfers, or fewest_stations'))).
+
+restore_transfer_penalties(Penalties) :-
+    retractall(transfer_penalty(_)),
+    maplist(assert_transfer_penalty, Penalties).
+
+assert_transfer_penalty(Penalty) :-
+    assertz(transfer_penalty(Penalty)).
 
 run_search(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     (   memberchk(Algorithm, [astar, a_star])
@@ -162,6 +195,30 @@ route_steps([From, To|Rest], [Step|Steps]) :-
     !,
     route_step(From, To, Step),
     route_steps([To|Rest], Steps).
+
+count_transfers(Route, Count) :-
+    route_steps(Route, Steps),
+    count_transfer_steps(Steps, 0, Count).
+
+count_transfer_steps([], Count, Count).
+count_transfer_steps([transfer(_, _, _)|Steps], Count0, Count) :-
+    !,
+    Count1 is Count0 + 1,
+    count_transfer_steps(Steps, Count1, Count).
+count_transfer_steps([ride(_, _, _, _)|Steps], Count0, Count) :-
+    count_transfer_steps(Steps, Count0, Count).
+
+route_minutes(Route, Minutes) :-
+    route_steps(Route, Steps),
+    sum_step_minutes(Steps, 0, Minutes).
+
+sum_step_minutes([], Minutes, Minutes).
+sum_step_minutes([ride(_, _, _, StepMinutes)|Steps], Total0, Total) :-
+    Total1 is Total0 + StepMinutes,
+    sum_step_minutes(Steps, Total1, Total).
+sum_step_minutes([transfer(_, _, StepMinutes)|Steps], Total0, Total) :-
+    Total1 is Total0 + StepMinutes,
+    sum_step_minutes(Steps, Total1, Total).
 
 route_step(From, To, ride(From, To, DistanceKm, Minutes)) :-
     edge(From, To, DistanceKm),
