@@ -1,18 +1,3 @@
-"""bridge.py - Python <-> Prolog bridge for the Bangkok rail route planner.
-
-Public API
-----------
-stations()                       -> {station_id: {...}}
-find_route(mode, start, goal)    -> {"route", "minutes", "transfers", "steps"}
-
-Errors (all subclasses of RouteError):
-    UnknownStation, UnknownMode, SameStation, NoRouteFound
-
-Threading: pyswip engines are bound to the thread that created them and
-Streamlit runs each session in its own thread. Every Prolog call is therefore
-executed on ONE dedicated worker thread, which also serialises access to the
-global transfer_penalty/1 that plan(fewest_transfers, ...) modifies.
-"""
 from __future__ import annotations
 
 import re

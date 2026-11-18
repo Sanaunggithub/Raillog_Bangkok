@@ -1,10 +1,3 @@
-"""app.py - Streamlit UI for the Bangkok Raillog route planner.
-
-Run from the repository root:
-    streamlit run prolog/app.py
-
-Needs: streamlit (>=1.30), pyswip, pydeck, and SWI-Prolog installed.
-"""
 from __future__ import annotations
 
 import html
