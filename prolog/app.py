@@ -8,7 +8,6 @@ import bridge
 
 st.set_page_config(page_title="Bangkok Raillog", page_icon="🚆", layout="wide")
 
-# ------------------------------------------------------------ line styles --
 # Keys are the LineId values from network.pl.
 LINE_STYLE = {
     "bts_sukhumvit":  ("BTS Sukhumvit",     "#76B947"),
@@ -58,7 +57,7 @@ def badge(line_id: str) -> str:
             f'font-weight:600;white-space:nowrap">{html.escape(line_name(line_id))}</span>')
 
 
-# ----------------------------------------------------------------- data ----
+# data
 try:
     STATIONS = bridge.stations()
 except Exception as exc:  # engine/SWI-Prolog problems
@@ -85,7 +84,7 @@ def short_name(sid: str) -> str:
     return f'{s["name_en"]} ({s["name_th"]})'
 
 
-# ---------------------------------------------------------- step grouping --
+# step grouping
 def build_rows(steps: list[dict]) -> list[dict]:
     """Merge consecutive rides on the same line into one row."""
     rows: list[dict] = []
@@ -151,7 +150,7 @@ def render_row(row: dict, show_all: bool) -> None:
             unsafe_allow_html=True)
 
 
-# -------------------------------------------------------------------- map --
+# map 
 def render_map(result: dict) -> None:
     try:
         import pydeck as pdk
@@ -202,7 +201,7 @@ def render_map(result: dict) -> None:
         map_style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"))
 
 
-# ------------------------------------------------------------------- UI ----
+# UI 
 st.title("🚆 Bangkok Raillog")
 st.caption("Route planner for BTS, MRT, Airport Rail Link and SRT Red Lines")
 

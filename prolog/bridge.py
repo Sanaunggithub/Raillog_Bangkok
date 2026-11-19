@@ -21,7 +21,7 @@ MODES = ("fastest", "fewest_transfers", "fewest_stations")
 _ID_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 
 
-# --------------------------------------------------------------- errors ----
+#  errors 
 class RouteError(Exception):
     """Base class for all expected routing problems."""
 
@@ -42,7 +42,7 @@ class NoRouteFound(RouteError):
     pass
 
 
-# ------------------------------------------------------- prolog thread -----
+# prolog thread
 _EXECUTOR = ThreadPoolExecutor(max_workers=1, thread_name_prefix="prolog")
 _PROLOG: Prolog | None = None
 _STATIONS: dict[str, dict] | None = None
@@ -64,7 +64,7 @@ def _engine() -> Prolog:
     return _PROLOG
 
 
-# ------------------------------------------------------ term conversion ----
+#  term conversion 
 def _py(term):
     """Convert a pyswip term into plain Python data.
 
@@ -110,7 +110,7 @@ def _step(term) -> dict:
     raise ValueError(f"Unexpected step term: {term!r}")
 
 
-# ------------------------------------------------------------ stations -----
+# stations 
 def _load_stations() -> dict[str, dict]:
     global _STATIONS
     if _STATIONS is None:
@@ -137,7 +137,7 @@ def stations() -> dict[str, dict]:
     return _run(_load_stations)
 
 
-# ---------------------------------------------------------- find_route -----
+# find_route
 def _query_route(mode: str, start: str, goal: str):
     prolog = _engine()
     # mode/start/goal were validated against fixed sets, so they are safe atoms.

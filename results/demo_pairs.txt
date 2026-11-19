@@ -1,0 +1,129 @@
+Sampled 3000 distinct ordered pairs (random seed 1).
+Eligible pairs: 2606; unreachable pairs: 0.
+WINNER marks the best value for that mode's metric in the table.
+
+=== A) All three ===
+A) All three — total advantage 162.0
+Origin:      Hua Mak (หัวหมาก) [MRT Yellow] mrt_yl11
+Destination: Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                                    
+--------------------------+---------+-----------+-------+----------------------------------------------------------------------------------
+Fastest [WINNER]          | 124.1   | 3         | 25    | MRT Yellow > MRT Blue > MRT Purple > MRT Pink                                    
+Fewest transfers [WINNER] | 220.7   | 2         | 53    | MRT Yellow > BTS Sukhumvit > MRT Pink                                            
+Fewest stations [WINNER]  | 151.6   | 5         | 22    | MRT Yellow > Airport Rail Link > BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+A) All three — total advantage 158.7
+Origin:      Si Udom (ศรีอุดม) [MRT Yellow] mrt_yl16
+Destination: Nonthaburi Civic Center (ศูนย์ราชการนนทบุรี) [MRT Pink] mrt_pk01
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                                    
+--------------------------+---------+-----------+-------+----------------------------------------------------------------------------------
+Fastest [WINNER]          | 125.8   | 3         | 25    | MRT Yellow > MRT Blue > MRT Purple > MRT Pink                                    
+Fewest transfers [WINNER] | 219.1   | 2         | 53    | MRT Yellow > BTS Sukhumvit > MRT Pink                                            
+Fewest stations [WINNER]  | 153.3   | 5         | 22    | MRT Yellow > Airport Rail Link > BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+A) All three — total advantage 145.0
+Origin:      Kalantan (กลันตัน) [MRT Yellow] mrt_yl12
+Destination: National Telecom (โทรคมนาคมแห่งชาติ) [MRT Pink] mrt_pk13
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                                      
+--------------------------+---------+-----------+-------+------------------------------------------------------------------------------------
+Fastest [WINNER]          | 115.1   | 3         | 23    | MRT Yellow > MRT Blue > BTS Sukhumvit > MRT Pink                                   
+Fewest transfers [WINNER] | 190.1   | 2         | 45    | MRT Yellow > BTS Sukhumvit > MRT Pink                                              
+Fewest stations [WINNER]  | 149.0   | 5         | 18    | MRT Yellow > Airport Rail Link > BTS Sukhumvit > MRT Blue > SRT Dark Red > MRT Pink
+A) All three — total advantage 144.2
+Origin:      Chaeng Watthana-Pak Kret 28 (แจ้งวัฒนะ-ปากเกร็ด 28) [MRT Pink] mrt_pk08
+Destination: Hua Mak (หัวหมาก) [MRT Yellow] mrt_yl11
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                      
+--------------------------+---------+-----------+-------+--------------------------------------------------------------------
+Fastest [WINNER]          | 129.4   | 3         | 27    | MRT Pink > BTS Sukhumvit > MRT Blue > MRT Yellow                   
+Fewest transfers [WINNER] | 212.4   | 2         | 51    | MRT Pink > BTS Sukhumvit > MRT Yellow                              
+Fewest stations [WINNER]  | 155.6   | 4         | 23    | MRT Pink > SRT Dark Red > MRT Blue > Airport Rail Link > MRT Yellow
+A) All three — total advantage 133.1
+Origin:      Si Nut (ศรีนุช) [MRT Yellow] mrt_yl13
+Destination: Chaeng Watthana 14 (แจ้งวัฒนะ 14) [MRT Pink] mrt_pk11
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                                      
+--------------------------+---------+-----------+-------+------------------------------------------------------------------------------------
+Fastest [WINNER]          | 126.6   | 3         | 26    | MRT Yellow > MRT Blue > BTS Sukhumvit > MRT Pink                                   
+Fewest transfers [WINNER] | 191.7   | 2         | 46    | MRT Yellow > BTS Sukhumvit > MRT Pink                                              
+Fewest stations [WINNER]  | 160.5   | 5         | 21    | MRT Yellow > Airport Rail Link > BTS Sukhumvit > MRT Blue > SRT Dark Red > MRT Pink
+
+=== B) Transfers ===
+B) Transfers — 2 transfer(s) saved, 1.2 extra minute(s)
+Origin:      Chit Lom (ชิดลม) [BTS Sukhumvit] bts_e1
+Destination: Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Mode                      | Minutes | Transfers | Stops | Line sequence                                   
+--------------------------+---------+-----------+-------+-------------------------------------------------
+Fastest [WINNER]          | 106.2   | 3         | 21    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+Fewest transfers [WINNER] | 107.4   | 1         | 27    | BTS Sukhumvit > MRT Pink                        
+Fewest stations [WINNER]  | 106.2   | 3         | 21    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+B) Transfers — 2 transfer(s) saved, 1.2 extra minute(s)
+Origin:      Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Destination: Chit Lom (ชิดลม) [BTS Sukhumvit] bts_e1
+Mode                      | Minutes | Transfers | Stops | Line sequence                                   
+--------------------------+---------+-----------+-------+-------------------------------------------------
+Fastest [WINNER]          | 106.2   | 3         | 21    | MRT Pink > MRT Purple > MRT Blue > BTS Sukhumvit
+Fewest transfers [WINNER] | 107.4   | 1         | 27    | MRT Pink > BTS Sukhumvit                        
+Fewest stations [WINNER]  | 106.2   | 3         | 21    | MRT Pink > MRT Purple > MRT Blue > BTS Sukhumvit
+B) Transfers — 2 transfer(s) saved, 1.2 extra minute(s)
+Origin:      Ari (อารีย์) [BTS Sukhumvit] bts_n5
+Destination: Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Mode                      | Minutes | Transfers | Stops | Line sequence                                   
+--------------------------+---------+-----------+-------+-------------------------------------------------
+Fastest [WINNER]          | 87.1    | 3         | 15    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+Fewest transfers [WINNER] | 88.4    | 1         | 21    | BTS Sukhumvit > MRT Pink                        
+Fewest stations [WINNER]  | 87.1    | 3         | 15    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+B) Transfers — 2 transfer(s) saved, 1.7 extra minute(s)
+Origin:      Srinagarindra (ศรีนครินทร์) [BTS Sukhumvit] bts_e20
+Destination: Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Mode                      | Minutes | Transfers | Stops | Line sequence                                   
+--------------------------+---------+-----------+-------+-------------------------------------------------
+Fastest [WINNER]          | 178.0   | 3         | 38    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+Fewest transfers [WINNER] | 179.7   | 1         | 46    | BTS Sukhumvit > MRT Pink                        
+Fewest stations [WINNER]  | 178.0   | 3         | 38    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+B) Transfers — 2 transfer(s) saved, 1.7 extra minute(s)
+Origin:      Sai Luat (สายลวด) [BTS Sukhumvit] bts_e22
+Destination: Yaek Pak Kret (แยกปากเกร็ด) [MRT Pink] mrt_pk06
+Mode                      | Minutes | Transfers | Stops | Line sequence                                   
+--------------------------+---------+-----------+-------+-------------------------------------------------
+Fastest [WINNER]          | 184.2   | 3         | 40    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+Fewest transfers [WINNER] | 186.0   | 1         | 48    | BTS Sukhumvit > MRT Pink                        
+Fewest stations [WINNER]  | 184.2   | 3         | 40    | BTS Sukhumvit > MRT Blue > MRT Purple > MRT Pink
+
+=== C) Stations ===
+C) Stations — 9 stop(s) saved, 1.4 extra minute(s)
+Origin:      Bang Wa (บางหว้า) [BTS Silom] bts_s12
+Destination: Setthabutbamphen (เศรษฐบุตรบำเพ็ญ) [MRT Pink] mrt_pk28
+Mode                      | Minutes | Transfers | Stops | Line sequence                                 
+--------------------------+---------+-----------+-------+-----------------------------------------------
+Fastest [WINNER]          | 163.9   | 2         | 40    | BTS Silom > BTS Sukhumvit > MRT Pink          
+Fewest transfers [WINNER] | 163.9   | 2         | 40    | BTS Silom > BTS Sukhumvit > MRT Pink          
+Fewest stations [WINNER]  | 165.3   | 3         | 31    | BTS Silom > MRT Blue > SRT Dark Red > MRT Pink
+C) Stations — 9 stop(s) saved, 1.4 extra minute(s)
+Origin:      Khu Bon (คู้บอน) [MRT Pink] mrt_pk23
+Destination: Bang Wa (บางหว้า) [BTS Silom] bts_s12
+Mode                      | Minutes | Transfers | Stops | Line sequence                                 
+--------------------------+---------+-----------+-------+-----------------------------------------------
+Fastest [WINNER]          | 142.1   | 2         | 35    | MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest transfers [WINNER] | 142.1   | 2         | 35    | MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest stations [WINNER]  | 143.5   | 3         | 26    | MRT Pink > SRT Dark Red > MRT Blue > BTS Silom
+C) Stations — 9 stop(s) saved, 1.4 extra minute(s)
+Origin:      Wat Phra Sri Mahathat (วัดพระศรีมหาธาตุ) [MRT Pink] mrt_pk16
+Destination: Bang Wa (บางหว้า) [BTS Silom] bts_s12
+Mode                      | Minutes | Transfers | Stops | Line sequence                                 
+--------------------------+---------+-----------+-------+-----------------------------------------------
+Fastest [WINNER]          | 116.1   | 2         | 28    | MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest transfers [WINNER] | 116.1   | 2         | 28    | MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest stations [WINNER]  | 117.5   | 3         | 19    | MRT Pink > SRT Dark Red > MRT Blue > BTS Silom
+C) Stations — 9 stop(s) saved, 3.4 extra minute(s)
+Origin:      Talat Phlu (ตลาดพลู) [BTS Silom] bts_s10
+Destination: Chaeng Watthana 14 (แจ้งวัฒนะ 14) [MRT Pink] mrt_pk11
+Mode                      | Minutes | Transfers | Stops | Line sequence                                 
+--------------------------+---------+-----------+-------+-----------------------------------------------
+Fastest [WINNER]          | 124.8   | 2         | 31    | BTS Silom > BTS Sukhumvit > MRT Pink          
+Fewest transfers [WINNER] | 124.8   | 2         | 31    | BTS Silom > BTS Sukhumvit > MRT Pink          
+Fewest stations [WINNER]  | 128.2   | 3         | 22    | BTS Silom > MRT Blue > SRT Dark Red > MRT Pink
+C) Stations — 9 stop(s) saved, 3.4 extra minute(s)
+Origin:      Impact Muang Thong Thani (อิมแพ็ค เมืองทองธานี) [MRT Pink (branch)] mrt_mt01
+Destination: Talat Phlu (ตลาดพลู) [BTS Silom] bts_s10
+Mode                      | Minutes | Transfers | Stops | Line sequence                                                     
+--------------------------+---------+-----------+-------+-------------------------------------------------------------------
+Fastest [WINNER]          | 137.0   | 3         | 32    | MRT Pink (branch) > MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest transfers [WINNER] | 137.0   | 3         | 32    | MRT Pink (branch) > MRT Pink > BTS Sukhumvit > BTS Silom          
+Fewest stations [WINNER]  | 140.5   | 4         | 23    | MRT Pink (branch) > MRT Pink > SRT Dark Red > MRT Blue > BTS Silom
