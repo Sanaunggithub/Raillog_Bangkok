@@ -9,10 +9,13 @@
 :- dynamic transfer_penalty/1.
 :- dynamic nodes_expanded/1.
 
+% Base cost added to each station transfer.
 transfer_penalty(3).
 
+% Assumed average rail speed used by the A* heuristic.
 heuristic_speed_kmh(120).
 
+% find_route/6 - Validates the endpoints and runs the requested route algorithm.
 find_route(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     ensure_station(Start),
     ensure_station(Goal),
@@ -20,15 +23,19 @@ find_route(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     retractall(nodes_expanded(_)),
     assertz(nodes_expanded(Expanded)).
 
+% astar/5 - Finds a route using the A* search algorithm.
 astar(Start, Goal, Route, Cost, Expanded) :-
     find_route(astar, Start, Goal, Route, Cost, Expanded).
 
+% ucs/5 - Finds a route using uniform-cost search.
 ucs(Start, Goal, Route, Cost, Expanded) :-
     find_route(ucs, Start, Goal, Route, Cost, Expanded).
 
+% bfs/5 - Finds a fewest-station route using breadth-first search.
 bfs(Start, Goal, Route, Cost, Expanded) :-
     find_route(bfs, Start, Goal, Route, Cost, Expanded).
 
+% plan/6 - Plans a fastest route, optionally optimizing for transfers or stations.
 plan(fastest, Start, Goal, Route, Minutes, Transfers) :-
     !,
     find_route(astar, Start, Goal, Route, Minutes, _),
@@ -55,13 +62,16 @@ plan(Mode, _Start, _Goal, _Route, _Minutes, _Transfers) :-
                 context(plan/6,
                         'Expected fastest, fewest_transfers, or fewest_stations'))).
 
+% restore_transfer_penalties/1 - Restores saved transfer penalties after planning.
 restore_transfer_penalties(Penalties) :-
     retractall(transfer_penalty(_)),
     maplist(assert_transfer_penalty, Penalties).
 
+% assert_transfer_penalty/1 - Adds one transfer penalty fact.
 assert_transfer_penalty(Penalty) :-
     assertz(transfer_penalty(Penalty)).
 
+% run_search/6 - Dispatches to the requested search implementation.
 run_search(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     (   memberchk(Algorithm, [astar, a_star])
     ->  best_first_search(astar, Start, Goal, Route, Cost, Expanded)
@@ -73,6 +83,7 @@ run_search(Algorithm, Start, Goal, Route, Cost, Expanded) :-
                     context(find_route/6, 'Expected astar, ucs, or bfs')))
     ).
 
+% ensure_station/1 - Throws an existence error if a station identifier is unknown.
 ensure_station(Station) :-
     (   station(Station, _, _, _, _, _, _)
     ->  true
@@ -80,6 +91,7 @@ ensure_station(Station) :-
                     context(find_route/6, 'Unknown station identifier')))
     ).
 
+% best_first_search/9 - Initializes A* or uniform-cost search with a priority heap.
 best_first_search(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     empty_heap(EmptyHeap),
     empty_assoc(EmptyBest),
@@ -88,6 +100,7 @@ best_first_search(Algorithm, Start, Goal, Route, Cost, Expanded) :-
     add_to_heap(EmptyHeap, H-0-0, state(Start, 0, [Start]), Heap),
     search_heap(Heap, Best, 1, Algorithm, Goal, 0, Route, Cost, Expanded).
 
+% search_heap/10 - Processes heap entries until the goal is reached or the heap is empty.
 search_heap(Heap, Best, Serial, Algorithm, Goal, Expanded0,
             Route, Cost, Expanded) :-
     get_from_heap(Heap, _Priority, state(Node, G, Path), Heap1),
@@ -108,6 +121,7 @@ search_heap(Heap, Best, Serial, Algorithm, Goal, Expanded0,
                     Route, Cost, Expanded)
     ).
 
+% relax_neighbors/12 - Adds or updates each neighbor with a lower accumulated cost.
 relax_neighbors([], _G, _Path, _Goal, _Algorithm,
                 Heap, Best, Serial, Heap, Best, Serial).
 relax_neighbors([Next-StepCost|Rest], G, Path, Goal, Algorithm,
@@ -128,6 +142,7 @@ relax_neighbors([Next-StepCost|Rest], G, Path, Goal, Algorithm,
     relax_neighbors(Rest, G, Path, Goal, Algorithm,
                     Heap1, Best1, Serial1, Heap, Best, Serial).
 
+% heuristic/4 - Estimates remaining travel time for A* or returns zero for UCS.
 heuristic(ucs, _Node, _Goal, 0) :-
     !.
 heuristic(astar, Node, Goal, Minutes) :-
@@ -135,10 +150,12 @@ heuristic(astar, Node, Goal, Minutes) :-
     heuristic_speed_kmh(Speed),
     Minutes is Distance * 60 / Speed.
 
+% breadth_first_search/6 - Initializes breadth-first route search.
 breadth_first_search(Start, Goal, Route, Cost, Expanded) :-
     breadth_first_queue([state(Start, [Start], 0)], [Start], Goal,
                         0, Route, Cost, Expanded).
 
+% breadth_first_queue/7 - Expands queued states until it reaches the goal.
 breadth_first_queue([state(Node, Path, Cost0)|_], _Seen, Goal, Expanded,
                     Route, Cost, Expanded) :-
     Node == Goal,
@@ -158,6 +175,7 @@ breadth_first_queue([state(Node, Path, Cost0)|Queue], Seen, Goal, Expanded0,
     breadth_first_queue(Queue1, Seen1, Goal, Expanded1,
                         Route, Cost, Expanded).
 
+% enqueue_neighbors/8 - Appends new neighbors to a breadth-first queue without revisiting states.
 enqueue_neighbors([], _Path, _Cost, Queue, Queue, Seen, Seen).
 enqueue_neighbors([Next-StepCost|Rest], Path, Cost0, Queue0, Queue,
                   Seen0, Seen) :-
@@ -166,16 +184,19 @@ enqueue_neighbors([Next-StepCost|Rest], Path, Cost0, Queue0, Queue,
     enqueue_neighbors(Rest, Path, Cost0, Queue1, Queue,
                       [Next|Seen0], Seen).
 
+% neighbor/3 - Calculates travel time for a rail edge.
 neighbor(From, To, Minutes) :-
     edge(From, To, DistanceKm),
     param(train_speed_kmh, Speed),
     param(dwell_min, Dwell),
     Minutes is DistanceKm * 60 / Speed + Dwell.
+% neighbor/3 - Calculates transfer time, including the transfer penalty.
 neighbor(From, To, Minutes) :-
     transfer(From, To, TransferMinutes),
     transfer_penalty(Penalty),
     Minutes is TransferMinutes + Penalty.
 
+% haversine_km/3 - Computes the great-circle distance between two stations.
 haversine_km(From, To, DistanceKm) :-
     station(From, _, _, _, _, Lat1, Lon1),
     station(To, _, _, _, _, Lat2, Lon2),
@@ -189,6 +210,7 @@ haversine_km(From, To, DistanceKm) :-
     CentralAngle is 2 * atan2(sqrt(A), sqrt(1 - A)),
     DistanceKm is 6371 * CentralAngle.
 
+% route_steps/2 - Converts a station route into ride and transfer steps.
 route_steps([_], []) :-
     !.
 route_steps([From, To|Rest], [Step|Steps]) :-
@@ -196,10 +218,12 @@ route_steps([From, To|Rest], [Step|Steps]) :-
     route_step(From, To, Step),
     route_steps([To|Rest], Steps).
 
+% count_transfers/2 - Counts transfer steps in a route.
 count_transfers(Route, Count) :-
     route_steps(Route, Steps),
     count_transfer_steps(Steps, 0, Count).
 
+% count_transfer_steps/3 - Accumulates the number of transfer steps.
 count_transfer_steps([], Count, Count).
 count_transfer_steps([transfer(_, _, _)|Steps], Count0, Count) :-
     !,
@@ -208,10 +232,12 @@ count_transfer_steps([transfer(_, _, _)|Steps], Count0, Count) :-
 count_transfer_steps([ride(_, _, _, _)|Steps], Count0, Count) :-
     count_transfer_steps(Steps, Count0, Count).
 
+% route_minutes/2 - Sums the duration of all ride and transfer steps.
 route_minutes(Route, Minutes) :-
     route_steps(Route, Steps),
     sum_step_minutes(Steps, 0, Minutes).
 
+% sum_step_minutes/3 - Accumulates the total route duration.
 sum_step_minutes([], Minutes, Minutes).
 sum_step_minutes([ride(_, _, _, StepMinutes)|Steps], Total0, Total) :-
     Total1 is Total0 + StepMinutes,
@@ -220,10 +246,12 @@ sum_step_minutes([transfer(_, _, StepMinutes)|Steps], Total0, Total) :-
     Total1 is Total0 + StepMinutes,
     sum_step_minutes(Steps, Total1, Total).
 
+% route_step/3 - Describes a direct rail-edge step.
 route_step(From, To, ride(From, To, DistanceKm, Minutes)) :-
     edge(From, To, DistanceKm),
     neighbor(From, To, Minutes),
     !.
+% route_step/3 - Describes a transfer step between stations or lines.
 route_step(From, To, transfer(From, To, Minutes)) :-
     transfer(From, To, TransferMinutes),
     transfer_penalty(Penalty),
